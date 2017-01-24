@@ -7,9 +7,15 @@ var mongoose = require('mongoose'),
 function MessagesController(){
 
 	this.index = function(req, res){
-		Message.find({}).populate({
-			path: 'comments _user'
+		Message.find({})
+		.populate({
+			path: 'comments',
+			populate: {
+				path: '_user',
+				model: 'User'
+			}
 		})
+		.populate('_user')
 		.exec(function(err,msgs){
 			if(err){
 				console.log('error');

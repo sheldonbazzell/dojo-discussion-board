@@ -11,7 +11,7 @@ Welcome {{user.username}}
 		<span style="display:inline-block;" class="date" ng-bind="message.createdAt | date: 'M/dd/yy'"></span>
 		<h3 style="margin: 10px 0;"><strong>{{message.content}}</strong></h3>
 		<div ng-repeat="comment in message.comments">
-			<p style="display:inline-block;"><strong>{{comment._user}}</strong></p>
+			<p style="display:inline-block;"><strong>{{comment._user.username}}</strong></p>
 			<span style="display:inline-block;" class="date" ng-bind="message.createdAt | date: 'M/dd/yy'"></span>
 			<p>{{comment.content}}</p>
 		</div>
