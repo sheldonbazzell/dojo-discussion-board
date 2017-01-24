@@ -1,0 +1,30 @@
+Welcome {{user.username}}
+<a href="/"><button>Sign Out</button></a>
+
+	<h2>Post a message:</h2>
+	<textarea ng-model="message.content"></textarea>
+	<input type="button" ng-click="create(message);" value="Post a message">
+
+<div class="container">
+	<div ng-repeat="message in messages" class="messages">
+		<h3 style="display:inline-block; margin-bottom: 0;" class="username">{{message._user.username}}</h3>
+		<span style="display:inline-block;" class="date" ng-bind="message.createdAt | date: 'M/dd/yy'"></span>
+		<h3 style="margin: 10px 0;"><strong>{{message.content}}</strong></h3>
+		<div ng-repeat="comment in message.comments">
+			<p style="display:inline-block;"><strong>{{comment._user}}</strong></p>
+			<span style="display:inline-block;" class="date" ng-bind="message.createdAt | date: 'M/dd/yy'"></span>
+			<p>{{comment.content}}</p>
+		</div>
+		<form ng-model="comment[$index]" ng-submit="newComment($index, message);">
+			<h4>Post a comment: </h4>
+			<textarea ng-model="comment[$index].content"></textarea>
+			<input type="submit" value="Post a comment">
+		</form>
+	</div>
+</div>
+
+<div ng-if="errors">
+	<ul>
+		<li ng-repeat="error in errors">{{error.message}}</li>
+	</ul>
+</div>
