@@ -1,0 +1,1 @@
+This is a message board written using the full MEAN stack. Home page asks for username, if username already exists in DB, existing user is logged in. Otherwise, a new user is created and logged in. Users can create messages, as well as leave comments on messages.
