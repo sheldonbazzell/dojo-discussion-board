@@ -15,6 +15,8 @@ var Schema = mongoose.Schema,
 		},
 		topics: [{type:Schema.Types.ObjectId, ref:'Topic'}],
 		posts: [{type:Schema.Types.ObjectId, ref:'Post'}],
-		comments: [{type:Schema.Types.ObjectId, ref:'Comment'}]
+		comments: [{type:Schema.Types.ObjectId, ref:'Comment'}],
+		downVotes: [{type:Schema.Types.ObjectId, ref:'DownVote'}],
+		upVotes: [{type:Schema.Types.ObjectId, ref:'UpVote'}]
 	}, {timestamps:true});
 mongoose.model('User', userSchema);

@@ -2,6 +2,7 @@ var users      = require('../controllers/users.js'),
 	categories =  require('../controllers/categories.js'),
 	posts      =  require('../controllers/posts.js'),
 	comments   =  require('../controllers/comments.js'),
+	votes      =  require('../controllers/votes.js'),
 	topics     = require('../controllers/topics.js');
 module.exports = function(app) {
 	app.get('/categories', categories.index);
@@ -11,5 +12,6 @@ module.exports = function(app) {
 	app.post('/comments', comments.create);
 	app.post('/topics', topics.create);
 	app.post('/posts', posts.create);
-	app.get('/posts', posts.index);
+	app.post('/upvotes', votes.createUpVote);
+	app.post('/downvotes', votes.createDownVote);
 }

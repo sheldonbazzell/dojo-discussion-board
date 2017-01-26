@@ -14,8 +14,8 @@ var	Schema = mongoose.Schema,
 			required:[true,"Response is required"],
 			minlength:[8, "Response must be at least 8 characters"]
 		},
-		downvotes: [{type:Schema.Types.ObjectId, ref:'DownVote'}],
-		upvotes: [{type:Schema.Types.ObjectId, ref:'UpVote'}],
+		downVotes: [{type:Schema.Types.ObjectId, ref:'DownVote'}],
+		upVotes: [{type:Schema.Types.ObjectId, ref:'UpVote'}],
 		comments: [{type:Schema.Types.ObjectId, ref:'Comment'}]
 	}, {timestamps:true});
 mongoose.model('Post', postSchema);

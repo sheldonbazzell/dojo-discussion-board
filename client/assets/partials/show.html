@@ -1,3 +1,4 @@
+<div class="container" style="width: 50%">
 <a href="#!/dashboard">Back</a>
 <div>
 	<h4 style="display: inline-block;" ng-bind="topic._user.name "></h4><span style="display: inline-block;">&nbsp;posted a topic:</span>
@@ -10,17 +11,25 @@
 	<p style="color: red;" ng-repeat="error in post_errors track by $index">{{error.message}}</p>
 </div>
 <h4>Post your answer here...</h4>
-<textarea ng-model="post.content"></textarea>
+<textarea ng-model="post.content" rows="5" cols="90"></textarea>
 <button ng-click="createPost();">Post</button>
 </div>
 <div>
 	<div ng-repeat="post in topic.posts">
-		<h4 ng-bind="post._user.name"></h4>
-		<p ng-bind="post.content"></p>
-		<div ng-repeat="comment in post.comments">
-			<a href="#"><span ng-bind="comment._user.name"></span></a><p ng-bind="comment.content"></p>
+		<p style="display:inline-block; font-weight:bold; vertical-align: top;" ng-bind="post._user.name"></p>
+		<p style="display:inline-block; vertical-align: top;" ng-bind="post.content"></p>
+		<div style="display: inline-block; vertical-align: top; float: right; margin-top: 1em;">
+			<span ng-bind="post.upVotes.length"></span>
+			<button ng-click="createUpvote(post);">Upvote</button>
+			<!-- <span ng-bind="post.downVotes.length"></span> -->
+			<span ng-bind="post.downVotes.length"></span>
+			<button ng-click="createDownvote(post)">Downvote</button>
 		</div>
-		<textarea ng-model="comment.content"></textarea>
-		<button ng-click="createComment(post, comment);">Comment</button>
+		<div ng-repeat="comment in post.comments">
+			<a href="#"><span ng-bind="comment._user.name"></span></a>&nbsp;<p style="display: inline-block;" ng-bind="comment.content"></p>
+		</div>
+		<textarea style="display: block;" rows="4" cols="70" ng-model="comment.content"></textarea>
+		<button style="display: block;" ng-click="createComment(post, comment);">Comment</button>
 	</div>
+</div>
 </div>

@@ -1,4 +1,6 @@
-app.controller('topicsController', ['$scope', '$location', 'topicsFactory', 'usersFactory', 'postsFactory', 'commentsFactory', '$routeParams', function($scope,$location,tF,uF,pF,cF,$routeParams){
+app.controller('topicsController', ['$scope', '$location', 'topicsFactory',
+	'usersFactory', 'postsFactory', 'commentsFactory', 'votesFactory', '$routeParams',
+	function($scope,$location,tF,uF,pF,cF,vF,$routeParams){
 	$scope.getTopic = function() {
 		tF.show($routeParams.id, function(data) {
 			if(data.errors) {
@@ -55,6 +57,40 @@ app.controller('topicsController', ['$scope', '$location', 'topicsFactory', 'use
 			})
 		} else {
 			$location.url('/')
+		}
+	}
+
+	$scope.createUpvote = function(post) {
+		if(post !== undefined) {
+			if(post._user !== undefined) {
+				$scope.upVote = {};
+				$scope.upVote.topic_id = $scope.topic._id;
+				$scope.upVote.post_id = post._id;
+				$scope.upVote.user_id = post._user._id;
+				vF.createUpVote($scope.upVote, function(data) {
+					if(data.errors) {
+						$scope.upVote_errors = data.errors;
+					}
+					$scope.topic = data;
+				})
+			}
+		}
+	}
+
+	$scope.createDownvote = function(post) {
+		if(post !== undefined) {
+			if(post._user !== undefined) {
+				$scope.downVote = {};
+				$scope.downVote.topic_id = $scope.topic._id;
+				$scope.downVote.post_id = post._id;
+				$scope.downVote.user_id = post._user._id;
+				vF.createDownVote($scope.downVote, function(data) {
+					if(data.errors) {
+						$scope.downVote_errors = data.errors;
+					}
+					$scope.topic = data;
+				})
+			}
 		}
 	}
 }])
