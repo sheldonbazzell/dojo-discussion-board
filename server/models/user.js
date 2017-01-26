@@ -1,30 +1,19 @@
-console.log('usermodel')
-var mongoose = require('mongoose'),
-	uniqueValidator = require('mongoose-unique-validator');
-	mongoose.Promise = global.Promise;
-var	Schema = mongoose.Schema;
+console.log('user model');
+var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+var Schema = mongoose.Schema,
 	userSchema = new Schema({
-		username: {
+		name: {
 			type: String,
-			required: [true, "Username required"],
-			maxlength: [19, "Username must be less than 20 characters"],
-			lowercase: true,
+			required: [true, "Name is required"],
+			minlength: [2, "Name must be at least 2 characters long"],
 			validate: {
-				validator: function(username){
-					return /^[a-z0-9_]+$/i.test(username);
-				},
-				message: "Username must only contain alphanumeric characters and underscores"
+				validator: function(name){
+					return /^[a-zA-Z]+$/.test(name);
+				}
 			}
 		},
-		messages: [{
-			type:Schema.Types.ObjectId, ref:'Message'
-		}],
-		comments: [{
-			type:Schema.Types.ObjectId, ref:'Comment'
-		}]
-
-	}, {timestamps: true});
-
-userSchema.plugin(uniqueValidator);
-
+		topics: [{type:Schema.Types.ObjectId, ref:'Topic'}],
+		posts: [{type:Schema.Types.ObjectId, ref:'Post'}],
+	}, {timestamps:true});
 mongoose.model('User', userSchema);

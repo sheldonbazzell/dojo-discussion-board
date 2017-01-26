@@ -7,9 +7,13 @@ app.config(function($routeProvider) {
       templateUrl: 'assets/partials/index.html',
       controller: 'indexController',
     })
-    .when('/users/:id', {
+    .when('/dashboard', {
+      templateUrl: 'assets/partials/dashboard.html',
+      controller: 'dashboardController'
+    })
+    .when('/topics/:id', {
       templateUrl: 'assets/partials/show.html',
-      controller: 'showController'
+      controller: 'topicsController'
     })
     .otherwise('/');
 });

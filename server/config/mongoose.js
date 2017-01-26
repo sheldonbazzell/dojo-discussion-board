@@ -7,7 +7,7 @@ var path = require("path");
 
 /********** UPDATE ***********/
 // connect to mongoose
-mongoose.connect("mongodb://localhost/mean_wall");
+mongoose.connect("mongodb://localhost/discussion_board");
 console.log('connected')
 /********** UPDATE ***********/
 

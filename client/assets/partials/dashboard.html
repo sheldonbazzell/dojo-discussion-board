@@ -1,0 +1,42 @@
+<div ng-if="login == 'Please login'">
+<a href="#!/">Login to get the most out of the site!</a>
+</div>
+<div ng-if="user.name">
+<a href="#" ng-click="logout();">Logout</a>
+</div>
+<h1 ng-if="user.name">Welcome, {{user.name}}!</h1>
+<input type="text" ng-model="search.query">
+<table>
+	<tr>
+		<th>Category <button ng-click="sortCat()">^</button></th>
+		<th>Topic <button ng-click="sortTopic()">^</button></th>
+		<th>User Name <button ng-click="sortUser()">^</button></th>
+		<th>Posts <button ng-click="sortPost()">^</button></th>
+	</tr>
+	<tr ng-repeat=" topic in topics | filter:q | orderBy: sorted ">
+		<td ng-bind="topic._category.category"></td>
+		<td><a ng-bind="topic.title" href="#!/topics/{{topic._id}}"></a></td>
+		<td ng-bind="topic._user.name"></td>
+		<td ng-bind="topic.posts.length"></td>
+	</tr>
+</table>
+<div ng-if="topic_errors"</div>
+<ul>
+	<li style="color:red;" ng-repeat="error in topic_errors">{{error.message}}</li>
+</ul>
+</div>
+<div ng-if="cat_error">
+	<p style="color:red;" ng-bind="cat_error"></p>
+</div>
+<form ng-submit="create()" ng-model="topic">
+	<h2>Add a new Topic</h2>
+	<label>Topic: </label>
+	<input type="text" ng-model="topic.title">
+	<label>Description: </label>
+	<textarea ng-model="topic.description"></textarea>
+	<label>Category: </label>
+	<select ng-model="topic._category">
+		<option ng-repeat="category in categories">{{category.category}}</option>
+	</select>
+	<input type="submit" value="Submit">
+</form>

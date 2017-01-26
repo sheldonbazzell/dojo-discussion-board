@@ -1,18 +1,21 @@
-console.log('comment model')
-var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-var Schema = mongoose.Schema,
+var mongoose      = require('mongoose');
+mongoose.Promise  = global.Promise;
+var Schema 		  = mongoose.Schema,
 	commentSchema = new Schema({
-	_user: {
-		type: Schema.Types.ObjectId, ref: 'User'
-	},
-	_message: {
-		type: Schema.Types.ObjectId, ref: 'Message'
-	},
-	content: {
-		type: String,
-		minlength: [5, 'Comment must be at least 5 characters']
-	}
-})
+
+		_user: {
+			type:Schema.Types.ObjectId, ref:'User',
+			required:[true,"User is required"]
+		},
+
+		_post: {type:Schema.Types.ObjectId, ref:'Post'},
+
+		content: {
+			type: String,
+			required: [true, "Comment is required"],
+			minlength: [4, "Comment must be at least 4 characters"]
+		}
+
+	}, {timestamps:true});
 
 mongoose.model('Comment', commentSchema);

@@ -1,10 +1,15 @@
-var users = require('../controllers/users.js')
-var messages = require('../controllers/messages.js')
-var comments = require('../controllers/comments.js')
+var users      = require('../controllers/users.js'),
+	categories =  require('../controllers/categories.js'),
+	posts      =  require('../controllers/posts.js'),
+	comments   =  require('../controllers/comments.js'),
+	topics     = require('../controllers/topics.js');
 module.exports = function(app) {
-	app.get('/users', users.index),
-	app.post('/users', users.create),
-	app.post('/messages', messages.create),
-	app.post('/comments', comments.create),
-	app.get('/messages', messages.index)
+	app.get('/categories', categories.index);
+	app.get('/topics', topics.index);
+	app.get('/topics/:id', topics.show);
+	app.post('/users', users.create);
+	app.post('/comments', comments.create);
+	app.post('/topics', topics.create);
+	app.post('/posts', posts.create);
+	app.get('/posts', posts.index);
 }

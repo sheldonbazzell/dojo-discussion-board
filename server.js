@@ -1,15 +1,17 @@
 var express  = require( 'express' ),
     path     = require( 'path' ),
+    // jwt 	 = require( 'jsonwebtoken '),
+    // exprJWT  = require( 'express-jwt'),
     bp       = require('body-parser'), 
     root     = __dirname,
     port     = process.env.PORT || 8000,
     app      = express();
 
-var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({extended:true}));
-
+var bp = require("body-parser");
+app.use(bp.urlencoded({ extended: true }));
 app.use( express.static( path.join( root, 'client' )));
 app.use( express.static( path.join( root, 'bower_components' )));
+// app.use(exprJWT({ secret: 'sheldonSecretKey' }).unless({ path: ['/']}))
 app.use( bp.json() );
 
 
