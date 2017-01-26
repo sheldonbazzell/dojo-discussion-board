@@ -45,6 +45,7 @@ app.controller('topicsController', ['$scope', '$location', 'topicsFactory', 'use
 			$scope.user.name !== undefined) {
 			comment.post_id = post._id;
 			comment.user_id = $scope.user._id;
+			comment.topic_id = $scope.topic._id;
 			cF.create(comment, function(data) {
 				if(data.errors) {
 					$scope.comment_errors = data.errors;

@@ -17,7 +17,9 @@
 	<div ng-repeat="post in topic.posts">
 		<h4 ng-bind="post._user.name"></h4>
 		<p ng-bind="post.content"></p>
-		<!-- <input type="hidden" ng-bind="post._id" ng-model="post._id"> -->
+		<div ng-repeat="comment in post.comments">
+			<a href="#"><span ng-bind="comment._user.name"></span></a><p ng-bind="comment.content"></p>
+		</div>
 		<textarea ng-model="comment.content"></textarea>
 		<button ng-click="createComment(post, comment);">Comment</button>
 	</div>

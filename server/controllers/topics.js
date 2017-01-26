@@ -89,7 +89,13 @@ function TopicsController() {
 		.populate('_user')
 		.populate({
 			path: 'posts',
-			populate: { path: '_user' }
+			populate: { 
+				path: '_user',
+				path: 'comments',
+				populate: {
+					path: '_user'
+				}
+			}
 		})
 		.exec(function(err,topic) {
 			if(err) {
