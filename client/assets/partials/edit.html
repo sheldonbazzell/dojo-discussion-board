@@ -1,0 +1,12 @@
+<h1 class="profile">Welcome</h1>
+<h1 class="profile" ng-bind="user.name"></h1>
+<a class="profile" href="#!/">Logout</a>
+<a class="profile" href="#!/dashboard">Dashboard</a>
+<div>
+	<h2>Edit Yourself</h2>
+	<form ng-submit="update();" ng-model="user">
+		<input type="text" ng-model="user.name">
+		<input type="date" ng-model="user.birthday">
+		<input type="submit" value="Update">
+	</form>
+</div>

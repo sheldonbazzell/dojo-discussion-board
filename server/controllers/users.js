@@ -59,6 +59,28 @@ function UsersController() {
 		})
 	}
 
+	this.update = function(req, res) {
+		User.findOne({_id:req.body._id}, function(err,user) {
+			if(err) {
+				res.json(err);
+			} else {
+				if(user.name !== req.body.name) {
+					user.name = req.body.name;
+				}
+				if(user.birthday !== req.body.birthday) {
+					user.birthday = req.body.birthday;
+				}
+				user.save(function(err) {
+					if(err) {
+						res.json(err);
+					} else {
+						res.json(user);
+					}
+				})
+			}
+		})
+	}
+
 }
 
 module.exports = new UsersController();

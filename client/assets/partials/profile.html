@@ -1,8 +1,10 @@
 <div>
 	<a href="#!/dashboard">Dashboard</a>
 	<a href="#!/">Logout</a>
+	<a href="#!/users/edit/{{user._id}}">Edit Profile</a>
 	<div>
 		<h1 class="profile" >Username:&nbsp;</h1><h1 class="profile" ng-bind="user.name"></h1>
+		<div><h3 class="profile">Birthday:&nbsp;</h3><h3 class="profile" ng-bind="user.birthday | date:'MM/dd/yy'"></h3></div>
 	</div>
 	<div>
 		<h2 class="profile">Reputation...</h2>

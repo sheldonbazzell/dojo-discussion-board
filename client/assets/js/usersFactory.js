@@ -1,5 +1,6 @@
 console.log('usersFactory');
 app.factory('usersFactory', ['$http', function($http) {
+	
 	function usersFactory() {
 		
 		var user = {};
@@ -23,6 +24,14 @@ app.factory('usersFactory', ['$http', function($http) {
 
 		this.setUser = function(callback) {
 			callback(user);
+		}
+
+		this.update = function(user, callback) {
+			$http.put('/users', user).then(function(res) {
+				if(callback && typeof callback == 'function') {
+					callback(res.data);
+				}
+			})
 		}
 
 	}
