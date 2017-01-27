@@ -1,0 +1,26 @@
+<div>
+	<a href="#!/dashboard">Dashboard</a>
+	<a href="#!/">Logout</a>
+	<div>
+		<h1 class="profile" >Username:&nbsp;</h1><h1 class="profile" ng-bind="user.name"></h1>
+	</div>
+	<div>
+		<h2 class="profile" >Reputation...</h2>
+		<h2 class="profile" ng-bind="reputation"></h2>
+		<div><h3 class="profile">Posted...</h3></div>
+		<div>
+			<div>
+				<p class="profile" ng-bind="user.topics.length"></p>&nbsp;
+				<p class="profile" ng-bind="topicStr"></p>
+			</div>
+			<div>
+				<p class="profile" ng-bind="user.posts.length"></p>&nbsp;
+				<p class="profile" ng-bind="postStr"></p>
+			</div>
+			<div>
+				<p  class="profile" ng-bind="user.comments.length"></p>&nbsp;
+				<p class="profile" ng-bind="commentStr"></p>
+			</div>
+		</div>
+	</div>
+</div>

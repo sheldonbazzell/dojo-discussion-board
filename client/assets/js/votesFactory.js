@@ -7,7 +7,7 @@ app.factory('votesFactory', ['$http', function($http) {
 
 		this.createUpVote = function(data, callback) {
 			$http.post('/upvotes', data).then(function(res) {
-				console.log(res.data);
+				console.log(res);
 				if(callback && typeof callback == 'function') {
 					callback(res.data);
 				}

@@ -5,10 +5,31 @@ var mongoose = require('mongoose'),
 // console.log(exprJWT, ' LINE 6 ');
 // console.log(jwt.sign({}, 'sheldonSecretKey'), ' LINE 7 ');
 
-function UsersController(){
+function UsersController() {
 
-	this.create = function(req,res){
-		User.findOne({name:req.body.name}, function(err,user){
+	this.show = function(req,res) {
+		User.findOne({_id:req.params.id})
+		.populate(
+			[
+				{path: 'topics',    model: 'Topic'},
+				{path: 'posts',     model: 'Post'},
+				{path: 'comments',  model: 'Comment'},
+				{path: 'upvotes',   model: 'UpVote'},
+				{path: 'downvotes', model: 'DownVote'},
+			]
+		)
+		.exec(function(err,user) {
+			if(err) {
+				res.json(err);
+			} else {
+				console.log('User found: ' + user);
+				res.json(user);
+			}
+		})
+	}
+
+	this.create = function(req,res) {
+		User.findOne({name:req.body.name}, function(err,user) {
 			console.log(user)
 			if(!user){
 				var user = new User(req.body);
@@ -17,7 +38,6 @@ function UsersController(){
 						console.log('Error saving user line 13: ' + err);
 						res.json(err);
 					} else{
-						console.log('Saving user: ' + user);
 						// var tokenData = {
 						// 	name:user.name,
 						// 	id:user._id
@@ -30,7 +50,6 @@ function UsersController(){
 					}
 				})
 			} else{
-				console.log('User already in database: ' + user);
 				// var userToken = jwt.sign({ user:req.body.user.name }, 'sheldonSecretKey');
 				// console.log('USER TOKEN: ' + userToken + ' LINE 27 ');
 				// user.userToken = userToken;

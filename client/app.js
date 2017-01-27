@@ -1,6 +1,5 @@
 var app = angular.module('app', ['ngRoute']);
-console.log(app)
-/* configuration for angular route */
+
 app.config(function($routeProvider) {
   $routeProvider
     .when('/', {
@@ -14,6 +13,10 @@ app.config(function($routeProvider) {
     .when('/topics/:id', {
       templateUrl: 'assets/partials/show.html',
       controller: 'topicsController'
+    })
+    .when('/users/:id', {
+      templateUrl: 'assets/partials/profile.html',
+      controller: 'profileController'
     })
     .otherwise('/');
 });

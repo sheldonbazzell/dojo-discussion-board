@@ -22,6 +22,7 @@ app.controller('topicsController', ['$scope', '$location', 'topicsFactory',
 	$scope.getUser();
 
 	$scope.createPost = function() {
+		$scope.clearErrors();
 		if($scope.topic.title !== undefined 
 			&& $scope.user.name !== undefined
 			&& $scope.post !== undefined) {
@@ -34,7 +35,7 @@ app.controller('topicsController', ['$scope', '$location', 'topicsFactory',
 				$scope.topic = data;
 			})
 		} 
-		else if($scope.post == undefined) {
+		else if($scope.post == undefined && $scope.user.name !== undefined) {
 			$scope.post_errors = [{message:'Post is required'}];
 		} else {
 			$location.url('/')
@@ -42,6 +43,7 @@ app.controller('topicsController', ['$scope', '$location', 'topicsFactory',
 	}
 
 	$scope.createComment = function(post, comment) {
+		$scope.clearErrors();
 		if(comment !== undefined && 
 			post.content !== undefined && 
 			$scope.user.name !== undefined) {
@@ -55,42 +57,65 @@ app.controller('topicsController', ['$scope', '$location', 'topicsFactory',
 				console.log(data);
 				$scope.topic = data;
 			})
+		} else if(comment == undefined && $scope.user.name !== undefined) { 
+			$scope.comment_errors = [{message:'Comment is required'}];
 		} else {
 			$location.url('/')
 		}
 	}
 
 	$scope.createUpvote = function(post) {
-		if(post !== undefined) {
+		$scope.clearErrors();
+		if(post !== undefined && $scope.user !== undefined) {
 			if(post._user !== undefined) {
 				$scope.upVote = {};
 				$scope.upVote.topic_id = $scope.topic._id;
 				$scope.upVote.post_id = post._id;
-				$scope.upVote.user_id = post._user._id;
+				$scope.upVote.user_id = $scope.user._id;
 				vF.createUpVote($scope.upVote, function(data) {
-					if(data.errors) {
-						$scope.upVote_errors = data.errors;
+					console.log(data);
+					if(data[0]) {
+						if(data[0].error) {
+							$scope.upVote_error = data[0].error;
+						}
+					} else {
+ 						$scope.topic = data;
 					}
-					$scope.topic = data;
 				})
 			}
+		} else if($scope.user.name == undefined) {
+			$scope.vote_error = "Please login to enable voting";
 		}
 	}
 
 	$scope.createDownvote = function(post) {
-		if(post !== undefined) {
+		$scope.clearErrors();
+		if(post !== undefined && $scope.user !== undefined) {
 			if(post._user !== undefined) {
 				$scope.downVote = {};
 				$scope.downVote.topic_id = $scope.topic._id;
 				$scope.downVote.post_id = post._id;
-				$scope.downVote.user_id = post._user._id;
+				$scope.downVote.user_id = $scope.user._id;
 				vF.createDownVote($scope.downVote, function(data) {
-					if(data.errors) {
-						$scope.downVote_errors = data.errors;
+					if(data[0]) {
+						if(data[0].error) {
+								$scope.downVote_error = data[0].error;
+						}
+					} else {
+ 						$scope.topic = data;
 					}
-					$scope.topic = data;
 				})
 			}
+		} else if($scope.user.name == undefined) {
+			$scope.vote_error = "Please login to enable voting";
 		}
 	}
+
+	$scope.clearErrors = function() {
+		$scope.comment_errors = '';
+		$scope.post_errors = '';
+		$scope.downVote_error = '';
+		$scope.upVote_error = '';
+	}
+	$scope.clearErrors();
 }])

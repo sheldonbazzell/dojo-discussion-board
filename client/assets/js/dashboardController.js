@@ -13,11 +13,8 @@ app.controller('dashboardController', ['$scope', 'usersFactory', 'topicsFactory'
 	$scope.isLoggedIn = function() {
 		if($scope.user == undefined) {
 			$scope.login = 'Please login';
-			console.log($scope.login)
 		} else if($scope.user !== undefined){
-			console.log($scope.user.name)
 			$scope.login = null;
-			console.log($scope.login)
 		}
 	};
 	$scope.isLoggedIn();
@@ -65,7 +62,6 @@ app.controller('dashboardController', ['$scope', 'usersFactory', 'topicsFactory'
 	$scope.sortCat = function() {
 		if($scope.sorted == '_category.category') {
 			$scope.sorted = '-_category.category';
-			console.log($scope.sorted)
 		} else if($scope.sorted == '-_category.category') {
 			$scope.sorted = '_.category.category'
 		} else {

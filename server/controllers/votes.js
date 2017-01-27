@@ -8,36 +8,54 @@ var mongoose = require('mongoose'),
 function VotesController(){
 
 	this.createUpVote = function(req,res) {
-		var errors = []; 
-		console.log(' REQ.BODY ' + req.body.topic_id + ' REQ.BODY ');
+		var errors = [];
 		User.findOne({_id:req.body.user_id}, function(err,user) {
 			if(!user) {
-				errors.push({message:'Please login to enable voting'});
+				errors.push({error:'Please login to enable voting'});
 				res.json(errors);
 			} else {
 				Post.findOne({_id:req.body.post_id}, function(err,post) {
+					console.log(post._user, " LINE 18 ")
+					console.log(user._id, " LINE 19 ")
 					if(!post) {
-						errors.push({message:'There was an error in processing. Please vote again.'});
+						errors.push({error:'There was an error in processing. Please vote again.'});
+						res.json(errors);
+					} else if(post._user.toString()  === user._id.toString()) {
+						errors.push({error:"You can't vote on your own posts!"});
 						res.json(errors);
 					} else {
-						var upVote = new UpVote({_user:user._id, _post:post._id});
-						upVote.save(function(err) {
-							if(err) {
-								console.log('Error: ' + err);
-								res.json(err);
+						UpVote.findOne({_user:user._id, _post:post._id}, function(err,upVote) {
+							if(upVote) {
+								errors.push({error:"You already voted on this post."})
+								res.json(errors);
 							} else {
-								user.upVotes.push(upVote);
-								user.save(function(err) {
-									if(err) {
-										res.json(err);
+								DownVote.findOne({_user:user._id, _post:post._id}, function(err,downVote) {
+									if(downVote) {
+										errors.push({error:"You already voted on this post."})
+										res.json(errors);
 									} else {
-										post.upVotes.push(upVote);
-										post.save(function(err) {
+										var upVote = new UpVote({_user:user._id, _post:post._id});
+										upVote.save(function(err) {
 											if(err) {
 												res.json(err);
 											} else {
-												console.log('upVote successfully saved');
-												res.redirect('/topics/' + req.body.topic_id);
+												user.upVotes.push(upVote);
+												user.save(function(err) {
+													if(err) {
+														res.json(err);
+													} else {
+														post.upVotes.push(upVote);
+														post.save(function(err) {
+															if(err) {
+																res.json(err);
+															} else {
+																console.log('upVote successfully saved');
+																console.log(req.body.topic_id + " LINE 43 ");
+																res.redirect('/topics/' + req.body.topic_id);
+															}
+														})
+													}
+												})
 											}
 										})
 									}
@@ -52,35 +70,52 @@ function VotesController(){
 
 	this.createDownVote = function(req,res) {
 		var errors = []; 
-		console.log(' REQ.BODY ' + req.body.topic_id + ' REQ.BODY ');
 		User.findOne({_id:req.body.user_id}, function(err,user) {
 			if(!user) {
-				errors.push({message:'Please login to enable voting'});
+				errors.push({error:'Please login to enable voting'});
 				res.json(errors);
 			} else {
 				Post.findOne({_id:req.body.post_id}, function(err,post) {
 					if(!post) {
 						errors.push({message:'There was an error in processing. Please vote again.'});
 						res.json(errors);
+					} else if(post._user.toString()  === user._id.toString()) {
+						errors.push({error:"You can't vote on your own posts!"});
+						res.json(errors);
 					} else {
-						var downVote = new DownVote({_user:user._id, _post:post._id});
-						downVote.save(function(err) {
-							if(err) {
-								console.log('Error: ' + err);
-								res.json(err);
+						DownVote.findOne({_user:user._id, _post:post._id}, function(err,downVote) {
+							if(downVote) {
+								errors.push({error:"You already voted on this post."})
+								res.json(errors);
 							} else {
-								user.downVotes.push(downVote);
-								user.save(function(err) {
-									if(err) {
-										res.json(err);
+								UpVote.findOne({_user:user._id, _post:post._id}, function(err,upVote) {
+									if(upVote) {
+										errors.push({error:"You already voted on this post."})
+										res.json(errors);
 									} else {
-										post.downVotes.push(downVote);
-										post.save(function(err) {
+										var downVote = new DownVote({_user:user._id, _post:post._id});
+										downVote.save(function(err) {
 											if(err) {
+												console.log('Error: ' + err);
 												res.json(err);
 											} else {
-												console.log('upVote successfully saved');
-												res.redirect('/topics/' + req.body.topic_id);
+												user.downVotes.push(downVote);
+												user.save(function(err) {
+													if(err) {
+														res.json(err);
+													} else {
+														post.downVotes.push(downVote);
+														post.save(function(err) {
+															if(err) {
+																res.json(err);
+															} else {
+																console.log('downVote successfully saved');
+																console.log(req.body.topic_id + " LINE 88 ");
+																res.redirect('/topics/' + req.body.topic_id);
+															}
+														})
+													}
+												})
 											}
 										})
 									}
