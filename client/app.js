@@ -18,5 +18,9 @@ app.config(function($routeProvider) {
       templateUrl: 'assets/partials/profile.html',
       controller: 'profileController'
     })
+    .when('/users/edit/:id', {
+      templateUrl: 'assets/partials/edit.html',
+      controller: 'editUserController'
+    })
     .otherwise('/');
 });

@@ -3,7 +3,8 @@
 	<a href="#!/">Login to get the most out of the site!</a>
 	</div>
 	<div ng-if="user.name">
-	<a href="#" ng-click="logout();">Logout</a>
+		<a href="#!/users/{{user._id}}">Profile</a>
+		<a href="#" ng-click="logout();">Logout</a>
 	</div>
 	<h1 ng-if="user.name">Welcome, {{user.name}}!</h1>
 	<input type="text" ng-model="q">

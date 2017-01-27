@@ -26,6 +26,14 @@ app.factory('usersFactory', ['$http', function($http) {
 			callback(user);
 		}
 
+		this.update = function(user, callback) {
+			$http.put('/users', user).then(function(res) {
+				if(callback && typeof callback == 'function') {
+					callback(res.data);
+				}
+			})
+		}
+
 	}
 
 	return new usersFactory;

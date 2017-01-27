@@ -7,6 +7,7 @@ app.controller('profileController', ['$scope', '$routeParams', 'usersFactory', '
 
 	$scope.user = function() {
 		uF.show($routeParams.id, function(data) {
+			console.log(data);
 			var topics   = data.topics.length,
 				posts    = data.posts.length,
 				comments = data.comments.length;
