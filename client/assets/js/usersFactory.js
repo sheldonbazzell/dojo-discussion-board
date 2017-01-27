@@ -1,5 +1,6 @@
 console.log('usersFactory');
 app.factory('usersFactory', ['$http', function($http) {
+	
 	function usersFactory() {
 		
 		var user = {};
