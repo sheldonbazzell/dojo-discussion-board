@@ -4,14 +4,12 @@ app.controller('indexController', ['$scope', 'usersFactory', '$location', functi
 	$scope.user = {};
 
 	$scope.create = function(){
-		console.log($scope.user);
-		uF.create($scope.user, function(data){
-			if(data.errors){
+		uF.create($scope.user, data => {
+			if(data.errors)
 				$scope.log_errors = data.errors;
-			} else{
+			else
 				$scope.user = data;
 				$location.url('/dashboard')
-			}
 		})
 	}
 

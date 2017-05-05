@@ -6,9 +6,8 @@ app.controller('profileController', ['$scope', '$routeParams', 'usersFactory', '
 	$scope.reputation = 0;
 
 	$scope.user = function() {
-		uF.show($routeParams.id, function(data) {
-			console.log(data);
-			var topics   = data.topics.length,
+		uF.show($routeParams.id, data => {
+			let topics   = data.topics.length,
 				posts    = data.posts.length,
 				comments = data.comments.length;
 			topics    == 1 ? $scope.topicStr     = 'topic'   : $scope.topicStr       = 'topics';

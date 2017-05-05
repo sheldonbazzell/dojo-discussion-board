@@ -2,24 +2,19 @@ app.factory('votesFactory', ['$http', function($http) {
 
 	function votesFactory() {
 
-		var vote  = {},
-			votes = [];
+		let vote  = {}, votes = [];
 
 		this.createUpVote = function(data, callback) {
-			$http.post('/upvotes', data).then(function(res) {
-				console.log(res);
-				if(callback && typeof callback == 'function') {
+			$http.post('/upvotes', data).then( res => {
+				if(callback && typeof callback === 'function')
 					callback(res.data);
-				}
 			})
 		}
 
 		this.createDownVote = function(data, callback) {
-			$http.post('/downvotes', data).then(function(res) {
-				console.log(res.data);
-				if(callback && typeof callback == 'function') {
+			$http.post('/downvotes', data).then( res => {
+				if(callback && typeof callback === 'function')
 					callback(res.data);
-				}
 			})
 		}
 	}

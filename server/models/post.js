@@ -1,7 +1,7 @@
 console.log('post model')
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-var	Schema = mongoose.Schema,
+const	Schema = mongoose.Schema,
 	postSchema = new Schema({
 		_user: {
 			type:Schema.Types.ObjectId, ref:'User'
